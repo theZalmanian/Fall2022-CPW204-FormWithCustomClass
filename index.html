@@ -9,6 +9,31 @@
     <link rel="stylesheet" href="/styles/main.css">
 </head>
 <body>
-    <form id="form"></form>
+    <h1>Add Product</h1>
+    <div id="validation-summary">
+        <p>Error Zone</p>
+    </div>
+    <form id="form">
+        <label for="title">Title:</label>
+        <input id="title" type="text">
+        <br>
+
+        <label for="price">Price:</label>
+        <input id="price" type="text">
+        <br>
+
+        <label for="rating">Rating:</label>
+        <select id="rating">
+            <option value="5">5 Stars</option>
+            <option value="4">4 Stars</option>
+            <option value="3">3 Stars</option>
+            <option value="2">2 Stars</option>
+            <option value="1">1 Stars</option>
+        </select>
+        <br>
+
+        <br>
+        <input type="button" value="Add Product">
+    </form>
 </body>
 </html>
