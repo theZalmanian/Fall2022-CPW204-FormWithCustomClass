@@ -1,0 +1,11 @@
+/* Styling the page w/ CSS */
+:root {
+    --primaryColor: #e59d29;
+    --secondaryColor: #18a8a1;
+    --backgroundColor: #002b36;
+}
+
+body {
+    background: var(--backgroundColor);
+    font-size: large;
+}
