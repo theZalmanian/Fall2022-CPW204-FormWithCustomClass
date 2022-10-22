@@ -7,5 +7,5 @@
 
 body {
     background: var(--backgroundColor);
-    font-size: large;
+    color: var(--primaryColor);
 }
