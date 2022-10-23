@@ -11,7 +11,8 @@ window.onload = function():void {
 }
 
 /** 
- * This function is called when the add game button is clicked
+ * This function is called when the add game button is clicked,
+ * and displays the game if all form input is valid
 */
 function addVideoGame():void { 
     // Validate input
@@ -21,29 +22,35 @@ function addVideoGame():void {
     }
 }
 
+function isAllDataValid():boolean {
+    return true;
+}
+
+/**
+ * Creates a new VideoGame object and populates it with
+ * data from the form
+ * @returns The new VideoGame object
+ */
 function getVideoGame():VideoGame {
-    // Create game
-    let currentGame = new VideoGame();
+    // create new instance of VideoGame
+    let currentGame:VideoGame = new VideoGame();
 
-    // Place form data into game
-    let titleInput = getInputById("title");
-    currentGame.title = titleInput.value;
+    // place form data into game
+    currentGame.title = getInputById("title").value;
+    currentGame.price  = parseFloat(getInputById("price").value);
+    currentGame.rating = parseInt(getInputById("rating").value);
+    currentGame.releaseDate = getInputById("release-date").value;
 
-    let priceInput = getInputById("price");
-    currentGame.price = parseFloat(priceInput.value);
-
-    let ratingInput = getInputById("rating");
-    currentGame.rating = parseInt(ratingInput.value);
-
-    let releaseDateInput = getInputById("release-date");
-    currentGame.releaseDate = releaseDateInput.value;
-
-    // Return game
+    // returns new instance of VideoGame
     return currentGame;
 }
 
+/**
+ * Displays the latest form submission at the bottom of the page
+ * @param currentGame The current form submission
+ */
 function displayVideoGame(currentGame:VideoGame):void {
-    // Display game below form
+    // grab the div where game will be displayed
     let displayDiv = getByID("display-games");
     
     let gameHeading = document.createElement("h2");
@@ -62,10 +69,6 @@ function displayVideoGame(currentGame:VideoGame):void {
     displayDiv.appendChild(price);
     displayDiv.appendChild(rating);
     displayDiv.appendChild(releaseDate);
-}
-
-function isAllDataValid():boolean {
-    return true;
 }
 
 /**

@@ -18,14 +18,14 @@ h1, h2, p {
     text-align: center;
 }
 
-div {
+#add-game-form {
     width: 36em;
     padding: 1em .5em;
     color: var(--primaryColor);
     border: 3px solid var(--secondaryColor);
 }
 
-div, input[type="button"] {
+#add-game-form, input[type="button"] {
     margin: auto;
     border-radius: 1em;
 }

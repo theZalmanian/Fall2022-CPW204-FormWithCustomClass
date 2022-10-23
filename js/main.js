@@ -12,16 +12,15 @@ function addVideoGame() {
         displayVideoGame(currentGame);
     }
 }
+function isAllDataValid() {
+    return true;
+}
 function getVideoGame() {
     var currentGame = new VideoGame();
-    var titleInput = getInputById("title");
-    currentGame.title = titleInput.value;
-    var priceInput = getInputById("price");
-    currentGame.price = parseFloat(priceInput.value);
-    var ratingInput = getInputById("rating");
-    currentGame.rating = parseInt(ratingInput.value);
-    var releaseDateInput = getInputById("release-date");
-    currentGame.releaseDate = releaseDateInput.value;
+    currentGame.title = getInputById("title").value;
+    currentGame.price = parseFloat(getInputById("price").value);
+    currentGame.rating = parseInt(getInputById("rating").value);
+    currentGame.releaseDate = getInputById("release-date").value;
     return currentGame;
 }
 function displayVideoGame(currentGame) {
@@ -38,9 +37,6 @@ function displayVideoGame(currentGame) {
     displayDiv.appendChild(price);
     displayDiv.appendChild(rating);
     displayDiv.appendChild(releaseDate);
-}
-function isAllDataValid() {
-    return true;
 }
 function getByID(id) {
     return document.getElementById(id);
