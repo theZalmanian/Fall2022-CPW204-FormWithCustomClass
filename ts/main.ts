@@ -14,6 +14,10 @@ window.onload = function():void {
 */
 function addProduct():void { 
     // Validate product
+    if(isAllDataValid) {
+        let currentProduct = getProduct();
+        displayProduct(currentProduct);
+    }
 }
 
 function getProduct():Product {
@@ -36,6 +40,20 @@ function getProduct():Product {
 
 function displayProduct(currentProduct:Product):void {
     // Display product below form
+    let displayDiv = getByID("display-product");
+    
+    let productHeading = document.createElement("h2");
+    productHeading.innerText = currentProduct.title;
+
+    let price = document.createElement("p");
+    price.innerText = "Price: " + currentProduct.price.toString();
+
+    let rating = document.createElement("p");
+    rating.innerText = "Rating: " + currentProduct.rating.toString();
+
+    displayDiv.appendChild(productHeading);
+    displayDiv.appendChild(price);
+    displayDiv.appendChild(rating);
 }
 
 /**

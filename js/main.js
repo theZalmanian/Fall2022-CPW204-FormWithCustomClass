@@ -7,6 +7,10 @@ window.onload = function () {
     setupButton("add-product", addProduct);
 };
 function addProduct() {
+    if (isAllDataValid) {
+        var currentProduct = getProduct();
+        displayProduct(currentProduct);
+    }
 }
 function getProduct() {
     var currentProduct = new Product();
@@ -19,6 +23,16 @@ function getProduct() {
     return currentProduct;
 }
 function displayProduct(currentProduct) {
+    var displayDiv = getByID("display-product");
+    var productHeading = document.createElement("h2");
+    productHeading.innerText = currentProduct.title;
+    var price = document.createElement("p");
+    price.innerText = "Price: " + currentProduct.price.toString();
+    var rating = document.createElement("p");
+    rating.innerText = "Rating: " + currentProduct.rating.toString();
+    displayDiv.appendChild(productHeading);
+    displayDiv.appendChild(price);
+    displayDiv.appendChild(rating);
 }
 function getByID(id) {
     return document.getElementById(id);
