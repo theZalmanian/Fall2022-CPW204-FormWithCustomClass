@@ -1,8 +1,9 @@
 # Add Product Form
-
-## Project Goal
 Get practice using more TypeScript, form validation,
 and introduce custom classes.
+
+## Live site
+https://thezalmanian.github.io/Fall2022-CPW204-FormWithCustomClass/
 
 ## Project criteria
 * Create a form with a minimum of 4 pieces of criteria to validate
