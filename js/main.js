@@ -6,10 +6,13 @@ var VideoGame = (function () {
 window.onload = function () {
     setupButton("add-game", addVideoGame);
 };
+var validInput = 0;
 function addVideoGame() {
+    var isAllDataValid = true;
     if (isAllDataValid) {
         var currentGame = getVideoGame();
-        displayVideoGame(currentGame);
+        validInput += 1;
+        displayVideoGame(currentGame, validInput);
     }
 }
 function isAllDataValid() {
@@ -23,20 +26,26 @@ function getVideoGame() {
     currentGame.releaseDate = getInputById("release-date").value;
     return currentGame;
 }
-function displayVideoGame(currentGame) {
-    var displayDiv = getByID("display-games");
-    var gameHeading = document.createElement("h2");
-    gameHeading.innerText = currentGame.title;
-    var price = document.createElement("p");
-    price.innerText = "Price: " + currentGame.price.toString();
-    var rating = document.createElement("p");
-    rating.innerText = "Rating: " + currentGame.rating.toString();
-    var releaseDate = document.createElement("p");
-    releaseDate.innerText = "Release Date: " + currentGame.releaseDate;
-    displayDiv.appendChild(gameHeading);
-    displayDiv.appendChild(price);
-    displayDiv.appendChild(rating);
-    displayDiv.appendChild(releaseDate);
+function displayVideoGame(currentGame, validInput) {
+    var displayGamesDiv = getByID("display-games");
+    var previousGames = validInput.toString();
+    createElement("div", "id", "game-container" + previousGames, "", displayGamesDiv);
+    var gameContainer = getByID("game-container" + previousGames);
+    gameContainer.setAttribute("class", "game-container");
+    var gameHeading = currentGame.title;
+    createElement("h2", "class", "game-info", gameHeading, gameContainer);
+    var gamePrice = "Price: $" + currentGame.price.toFixed(2).toString();
+    createElement("p", "class", "game-info", gamePrice, gameContainer);
+    var gameRating = "Rating: " + currentGame.rating.toString();
+    createElement("p", "class", "game-info", gameRating, gameContainer);
+    var gameReleaseDate = "Release Date: " + currentGame.releaseDate;
+    createElement("p", "class", "game-info", gameReleaseDate, gameContainer);
+}
+function createElement(elementType, attributeType, attributeValue, text, createWithin) {
+    var newElement = document.createElement(elementType);
+    newElement.setAttribute(attributeType, attributeValue);
+    newElement.innerText = text;
+    createWithin.appendChild(newElement);
 }
 function getByID(id) {
     return document.getElementById(id);

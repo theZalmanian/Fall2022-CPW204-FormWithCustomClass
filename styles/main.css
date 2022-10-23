@@ -14,7 +14,7 @@ body, input[type="text"], input[type="button"] {
     font-family: Arial, Helvetica, sans-serif; 
 }
 
-h1, h2, p {
+h1 {
     text-align: center;
 }
 
@@ -25,8 +25,26 @@ h1, h2, p {
     border: 3px solid var(--secondaryColor);
 }
 
-#add-game-form, input[type="button"] {
-    margin: auto;
+#display-games {
+    width: 42em;
+    padding: 1em .5em;
+}
+
+.game-container {
+    float: left;
+    text-align: left;
+    margin: 0 .5em .5em 0;
+    padding: .5em;
+    border: 2px solid var(--primaryColor);
+    border-radius: 1em;
+}
+
+.game-info {
+    color: var(--primaryColor);
+}
+
+#add-game-form, input[type="button"], #display-games {
+    margin: 0 auto;
     border-radius: 1em;
 }
 
