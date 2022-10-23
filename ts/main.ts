@@ -19,10 +19,14 @@ let validInput = 0;
  * and displays the game if all form input is valid
 */
 function addVideoGame():void { 
-    let isAllDataValid = true;
+    // Clear out previous errors
+    clearPreviousErrors();
+
+    // Check if all data is valid
+    let allValid = isValid();
     
     // Validate input
-    if(isAllDataValid) {
+    if(allValid) {
         // Create new instance of game
         let currentGame:VideoGame = getVideoGame();
         // Increment valid input by 1
@@ -32,8 +36,39 @@ function addVideoGame():void {
     }
 }
 
-function isAllDataValid():boolean {
-    return true;
+/**
+ * Checks if all the submitted form data is valid input.
+ * 
+ * If all data is valid, returns true, if not returns false and displays
+ * the appropriate error message(s)
+ * @returns True if all data is valid, False if not
+ */
+function isValid():boolean {
+    let allDataValid = true;
+    
+    // validate game title
+    if(isInputEmpty("title")) {
+        displayError("Please enter a title");
+        allDataValid = false;
+    }
+    
+    // validate game price
+    if(!isPriceValid("price")) {
+        allDataValid = false;
+    } 
+
+    // validate rating
+    if(isInputEmpty("rating")) {
+        displayError("Please select your rating");
+        allDataValid = false;
+    }
+
+    // validate release date
+    if(!isDateValid("release-date")) {
+        allDataValid = false;
+    }
+
+    return allDataValid;
 }
 
 /**
@@ -46,10 +81,10 @@ function getVideoGame():VideoGame {
     let currentGame:VideoGame = new VideoGame();
 
     // place form data into game
-    currentGame.title = getInputById("title").value;
-    currentGame.price  = parseFloat(getInputById("price").value);
-    currentGame.rating = parseInt(getInputById("rating").value);
-    currentGame.releaseDate = getInputById("release-date").value;
+    currentGame.title       = getInputByID("title").value;
+    currentGame.price       = parseFloat(getInputByID("price").value);
+    currentGame.rating      = parseInt(getInputByID("rating").value);
+    currentGame.releaseDate = getInputByID("release-date").value;
 
     // returns new instance of VideoGame
     return currentGame;
@@ -61,7 +96,7 @@ function getVideoGame():VideoGame {
  * @param validInput The number of valid inputs entered until now
  */
 function displayVideoGame(currentGame:VideoGame, validInput:number):void {
-    // grab the div where game will be displayed
+    // grab the div where games are displayed
     let displayGamesDiv:HTMLElement = getByID("display-games");
     
     // create a div to contain the game info,
@@ -91,6 +126,110 @@ function displayVideoGame(currentGame:VideoGame, validInput:number):void {
 }
 
 /**
+ * Checks if input is an empty string
+ * @param id The input's id.
+ * @returns True if input is empty, False if not
+ */
+function isInputEmpty(id:string):boolean {
+    // get value from textbox
+    let inputValue:string = getInputByID(id).value;
+    
+    // check if empty string
+    if(inputValue == "") {
+        return true;
+    }
+    else {
+        return false;
+    }
+}
+
+/**
+ * Checks if price is a valid number. If price is not valid, displays
+ * the appropriate error message(s)
+ * @param id The input's id.
+ * @returns True if price is a number, False if not
+ */
+ function isPriceValid(id:string):boolean {
+    // get value from textbox
+    let inputValue:string = getInputByID(id).value;
+
+    // check if empty string
+    if(isInputEmpty(id)) {
+        displayError("Please enter a price");
+        return false;
+    } 
+    
+    // check if not a number
+    if( isNaN(parseFloat(inputValue)) ) {
+        displayError("Please enter price as a number")
+        return false;
+    }
+
+    // check if negative
+    if(parseFloat(inputValue) < 0) {
+        displayError("Please enter price as a positive number")
+        return false;
+    }
+    
+    // otherwise valid number
+    else {
+        return true;
+    }
+}
+
+/**
+ * Checks if the date entered is formatted correctly. 
+ * If date is not valid, displays the appropriate error message(s)
+ * @param id The input's id
+ * @returns True if date is valid, False if not.
+ */
+ function isDateValid(id:string):boolean {
+    // get value from textbox
+    let inputValue:string = getInputByID(id).value;
+
+    // check if empty string
+    if(isInputEmpty(id)) {
+        displayError("Please enter a release date");
+        return false;
+    } 
+    
+    // setup regular expression for validation
+    // mm/dd/yyyy or m/d/yyyy
+    let dateFormat = /^\d{1,2}\/\d{1,2}\/\d{4}$/g;
+
+    // test if user input matches proper formatting
+    let isDate = dateFormat.test(inputValue);
+
+    // if formatting is incorrect, show corresponding error
+    if (isDate == false) {
+        displayError("Please enter release date as mm/dd/yyyy");
+        return false;
+    }
+    else {
+        return true;
+    }
+}
+
+/**
+ * Clears out all previous errors when called
+ */
+function clearPreviousErrors():void {
+    let errorSummary = getByID("error-list");
+    errorSummary.innerHTML = "";
+}
+
+/**
+ * Displays the given error message
+ */
+function displayError(errorMessage:string):void {
+    // grab the ul where errors are displayed
+    let displayErrorsList:HTMLElement = getByID("error-list");
+
+    // create the error message
+    createElement("li", "class", "error", errorMessage, displayErrorsList);
+}
+
+/**
  * Creates an element, gives it an id or class, places the specified text within it, 
  * and places the element within another specified element.
  * @param elementType The type of element being created
@@ -108,7 +247,7 @@ function displayVideoGame(currentGame:VideoGame, validInput:number):void {
     // set element's text
     newElement.innerText = text;
 
-    // add element to end of specified element
+    // add element within specified element
     createWithin.appendChild(newElement);
 } 
 
@@ -123,10 +262,10 @@ function displayVideoGame(currentGame:VideoGame, validInput:number):void {
 
 /**
  * Gets an HTML Input Element by it's ID
- * @param id - The element's id.
+ * @param id - The input's id.
  * @returns The corresponding HTML Input Element
  */
-function getInputById(id:string):HTMLInputElement {
+function getInputByID(id:string):HTMLInputElement {
     return <HTMLInputElement> getByID(id);
 }
 

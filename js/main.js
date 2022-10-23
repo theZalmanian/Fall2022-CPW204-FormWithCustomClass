@@ -8,22 +8,38 @@ window.onload = function () {
 };
 var validInput = 0;
 function addVideoGame() {
-    var isAllDataValid = true;
-    if (isAllDataValid) {
+    clearPreviousErrors();
+    var allValid = isValid();
+    if (allValid) {
         var currentGame = getVideoGame();
         validInput += 1;
         displayVideoGame(currentGame, validInput);
     }
 }
-function isAllDataValid() {
-    return true;
+function isValid() {
+    var allDataValid = true;
+    if (isInputEmpty("title")) {
+        displayError("Please enter a title");
+        allDataValid = false;
+    }
+    if (!isPriceValid("price")) {
+        allDataValid = false;
+    }
+    if (isInputEmpty("rating")) {
+        displayError("Please select your rating");
+        allDataValid = false;
+    }
+    if (!isDateValid("release-date")) {
+        allDataValid = false;
+    }
+    return allDataValid;
 }
 function getVideoGame() {
     var currentGame = new VideoGame();
-    currentGame.title = getInputById("title").value;
-    currentGame.price = parseFloat(getInputById("price").value);
-    currentGame.rating = parseInt(getInputById("rating").value);
-    currentGame.releaseDate = getInputById("release-date").value;
+    currentGame.title = getInputByID("title").value;
+    currentGame.price = parseFloat(getInputByID("price").value);
+    currentGame.rating = parseInt(getInputByID("rating").value);
+    currentGame.releaseDate = getInputByID("release-date").value;
     return currentGame;
 }
 function displayVideoGame(currentGame, validInput) {
@@ -41,6 +57,57 @@ function displayVideoGame(currentGame, validInput) {
     var gameReleaseDate = "Release Date: " + currentGame.releaseDate;
     createElement("p", "class", "game-info", gameReleaseDate, gameContainer);
 }
+function isInputEmpty(id) {
+    var inputValue = getInputByID(id).value;
+    if (inputValue == "") {
+        return true;
+    }
+    else {
+        return false;
+    }
+}
+function isPriceValid(id) {
+    var inputValue = getInputByID(id).value;
+    if (isInputEmpty(id)) {
+        displayError("Please enter a price");
+        return false;
+    }
+    if (isNaN(parseFloat(inputValue))) {
+        displayError("Please enter price as a number");
+        return false;
+    }
+    if (parseFloat(inputValue) < 0) {
+        displayError("Please enter price as a positive number");
+        return false;
+    }
+    else {
+        return true;
+    }
+}
+function isDateValid(id) {
+    var inputValue = getInputByID(id).value;
+    if (isInputEmpty(id)) {
+        displayError("Please enter a release date");
+        return false;
+    }
+    var dateFormat = /^\d{1,2}\/\d{1,2}\/\d{4}$/g;
+    var isDate = dateFormat.test(inputValue);
+    if (isDate == false) {
+        displayError("Please enter release date as mm/dd/yyyy");
+        return false;
+    }
+    else {
+        return true;
+    }
+}
+function clearPreviousErrors() {
+    var errorSummary = getByID("error-list");
+    errorSummary.innerHTML = "";
+}
+function displayError(errorMessage) {
+    var displayErrorsList = getByID("error-list");
+    createElement("li", "class", "error", errorMessage, displayErrorsList);
+}
 function createElement(elementType, attributeType, attributeValue, text, createWithin) {
     var newElement = document.createElement(elementType);
     newElement.setAttribute(attributeType, attributeValue);
@@ -50,7 +117,7 @@ function createElement(elementType, attributeType, attributeValue, text, createW
 function getByID(id) {
     return document.getElementById(id);
 }
-function getInputById(id) {
+function getInputByID(id) {
     return getByID(id);
 }
 function setupButton(id, useFunction) {
