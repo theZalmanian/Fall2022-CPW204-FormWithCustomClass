@@ -1,46 +1,54 @@
-var Product = (function () {
-    function Product() {
+var VideoGame = (function () {
+    function VideoGame() {
     }
-    return Product;
+    return VideoGame;
 }());
 window.onload = function () {
-    setupButton("add-product", addProduct);
+    setupButton("add-game", addVideoGame);
 };
-function addProduct() {
+function addVideoGame() {
     if (isAllDataValid) {
-        var currentProduct = getProduct();
-        displayProduct(currentProduct);
+        var currentGame = getVideoGame();
+        displayVideoGame(currentGame);
     }
 }
-function getProduct() {
-    var currentProduct = new Product();
-    var titleTextBox = getByID("title");
-    currentProduct.title = titleTextBox.value;
-    var priceTextBox = getByID("price");
-    currentProduct.price = parseFloat(priceTextBox.value);
-    var ratingInput = getByID("rating");
-    currentProduct.rating = parseInt(ratingInput.value);
-    return currentProduct;
+function getVideoGame() {
+    var currentGame = new VideoGame();
+    var titleInput = getInputById("title");
+    currentGame.title = titleInput.value;
+    var priceInput = getInputById("price");
+    currentGame.price = parseFloat(priceInput.value);
+    var ratingInput = getInputById("rating");
+    currentGame.rating = parseInt(ratingInput.value);
+    var releaseDateInput = getInputById("release-date");
+    currentGame.releaseDate = releaseDateInput.value;
+    return currentGame;
 }
-function displayProduct(currentProduct) {
-    var displayDiv = getByID("display-product");
-    var productHeading = document.createElement("h2");
-    productHeading.innerText = currentProduct.title;
+function displayVideoGame(currentGame) {
+    var displayDiv = getByID("display-games");
+    var gameHeading = document.createElement("h2");
+    gameHeading.innerText = currentGame.title;
     var price = document.createElement("p");
-    price.innerText = "Price: " + currentProduct.price.toString();
+    price.innerText = "Price: " + currentGame.price.toString();
     var rating = document.createElement("p");
-    rating.innerText = "Rating: " + currentProduct.rating.toString();
-    displayDiv.appendChild(productHeading);
+    rating.innerText = "Rating: " + currentGame.rating.toString();
+    var releaseDate = document.createElement("p");
+    releaseDate.innerText = "Release Date: " + currentGame.releaseDate;
+    displayDiv.appendChild(gameHeading);
     displayDiv.appendChild(price);
     displayDiv.appendChild(rating);
+    displayDiv.appendChild(releaseDate);
+}
+function isAllDataValid() {
+    return true;
 }
 function getByID(id) {
     return document.getElementById(id);
 }
+function getInputById(id) {
+    return getByID(id);
+}
 function setupButton(id, useFunction) {
     var button = getByID(id);
     button.onclick = useFunction;
-}
-function isAllDataValid() {
-    return true;
 }

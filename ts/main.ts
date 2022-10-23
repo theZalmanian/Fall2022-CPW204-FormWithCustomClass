@@ -1,64 +1,76 @@
-class Product{
+class VideoGame{
     title:string;
     price:number;
     rating:number;
+    releaseDate:string;
 }
 
 window.onload = function():void {
-    // setup onclick event for add product button
-    setupButton("add-product", addProduct);
+    // setup onclick event for add game button
+    setupButton("add-game", addVideoGame);
 }
 
 /** 
- * This function is called when the add product button is clicked
+ * This function is called when the add game button is clicked
 */
-function addProduct():void { 
-    // Validate product
+function addVideoGame():void { 
+    // Validate input
     if(isAllDataValid) {
-        let currentProduct = getProduct();
-        displayProduct(currentProduct);
+        let currentGame:VideoGame = getVideoGame();
+        displayVideoGame(currentGame);
     }
 }
 
-function getProduct():Product {
-    // Create product
-    let currentProduct = new Product();
+function getVideoGame():VideoGame {
+    // Create game
+    let currentGame = new VideoGame();
 
-    // Place form data into product
-    let titleTextBox = <HTMLInputElement> getByID("title");
-    currentProduct.title = titleTextBox.value;
+    // Place form data into game
+    let titleInput = getInputById("title");
+    currentGame.title = titleInput.value;
 
-    let priceTextBox = <HTMLInputElement> getByID("price");
-    currentProduct.price = parseFloat(priceTextBox.value);
+    let priceInput = getInputById("price");
+    currentGame.price = parseFloat(priceInput.value);
 
-    let ratingInput = <HTMLSelectElement> getByID("rating");
-    currentProduct.rating = parseInt(ratingInput.value);
+    let ratingInput = getInputById("rating");
+    currentGame.rating = parseInt(ratingInput.value);
 
-    // Return product
-    return currentProduct;
+    let releaseDateInput = getInputById("release-date");
+    currentGame.releaseDate = releaseDateInput.value;
+
+    // Return game
+    return currentGame;
 }
 
-function displayProduct(currentProduct:Product):void {
-    // Display product below form
-    let displayDiv = getByID("display-product");
+function displayVideoGame(currentGame:VideoGame):void {
+    // Display game below form
+    let displayDiv = getByID("display-games");
     
-    let productHeading = document.createElement("h2");
-    productHeading.innerText = currentProduct.title;
+    let gameHeading = document.createElement("h2");
+    gameHeading.innerText = currentGame.title;
 
     let price = document.createElement("p");
-    price.innerText = "Price: " + currentProduct.price.toString();
+    price.innerText = "Price: " + currentGame.price.toString();
 
     let rating = document.createElement("p");
-    rating.innerText = "Rating: " + currentProduct.rating.toString();
+    rating.innerText = "Rating: " + currentGame.rating.toString();
 
-    displayDiv.appendChild(productHeading);
+    let releaseDate = document.createElement("p");
+    releaseDate.innerText = "Release Date: " + currentGame.releaseDate;
+
+    displayDiv.appendChild(gameHeading);
     displayDiv.appendChild(price);
     displayDiv.appendChild(rating);
+    displayDiv.appendChild(releaseDate);
+}
+
+function isAllDataValid():boolean {
+    return true;
 }
 
 /**
  * Shortened form of the document.getElementById method
- * @param {string} id - The element's id.
+ * @param id - The element's id.
  * @returns The corresponding HTML Element
  */
  function getByID(id:string):HTMLElement {
@@ -66,15 +78,20 @@ function displayProduct(currentProduct:Product):void {
 }
 
 /**
+ * Gets an HTML Input Element by it's ID
+ * @param id - The element's id.
+ * @returns The corresponding HTML Input Element
+ */
+function getInputById(id:string):HTMLInputElement {
+    return <HTMLInputElement> getByID(id);
+}
+
+/**
  * Sets up an onclick event for a button.
- * @param {string} id The button's id.
- * @param {any} useFunction The function to be called when button is clicked.
+ * @param id The button's id.
+ * @param useFunction The function to be called when button is clicked.
  */
  function setupButton(id:string, useFunction:() => void):void {
     let button:HTMLElement = getByID(id);
     button.onclick = useFunction;
-}
-
-function isAllDataValid():boolean {
-    return true;
 }
