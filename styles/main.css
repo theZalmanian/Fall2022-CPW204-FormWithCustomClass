@@ -3,9 +3,9 @@
 /* Color */
 :root {
     --colorPrimary:    #e59d29;
-    --colorSecondary:  #18a8a1;
+    --colorSecondary:  #128ad4;
     --colorBackground: #002b36;
-    --colorError:     #e54f29;
+    --colorError:      #e54f29;
 }
 
 body {
@@ -14,7 +14,7 @@ body {
 }
 
 body, input[type="text"], input[type="button"] {
-    font-family: Arial, Helvetica, sans-serif; 
+    font-family: 'Noto Sans Warang Citi', Arial, Helvetica, sans-serif; 
 }
 
 h1, h2 {
@@ -75,7 +75,7 @@ input[type="button"] {
     margin-top: .5em;
     display: block;
     background: none;
-    color: var(--colorSecondary);
+    color: var(--colorPrimary);
     border: 3px solid var(--colorSecondary);
 }
 
@@ -99,6 +99,7 @@ input[type="button"]:hover {
     background: var(--colorSecondary);
     color: var(--colorBackground);
     font-weight: bold;
+    text-align: center;
 }
 
 .rating-star {
