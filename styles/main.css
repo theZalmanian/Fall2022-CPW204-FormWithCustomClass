@@ -1,13 +1,14 @@
 /* Styling the page w/ CSS */
 :root {
-    --primaryColor: #e59d29;
-    --secondaryColor: #18a8a1;
-    --backgroundColor: #002b36;
+    --colorPrimary:    #e59d29;
+    --colorSecondary:  #18a8a1;
+    --colorAccent:     #e54f29;
+    --colorBackground: #002b36;
 }
 
 body {
-    background: var(--backgroundColor);
-    color: var(--primaryColor);
+    background: var(--colorBackground);
+    color: var(--colorPrimary);
 }
 
 body, input[type="text"], input[type="button"] {
@@ -18,49 +19,49 @@ h1 {
     text-align: center;
 }
 
+#display-errors, #add-game-form, input[type="button"], 
+#display-games, .game-container {
+    margin: auto;
+    border-radius: .5em;
+}
+
+#display-errors {
+    width: fit-content;
+}
+
+#error-list {
+    padding-left: 1em;
+    list-style-type: square;
+    color: var(--colorAccent);
+}
+
 #add-game-form {
-    width: 36em;
-    padding: 1em .5em;
-    color: var(--primaryColor);
-    border: 3px solid var(--secondaryColor);
-}
-
-#display-games {
-    width: 42em;
-    padding: 1em .5em;
-}
-
-.game-container {
-    float: left;
-    text-align: left;
-    margin: 0 .5em .5em 0;
-    padding: .5em;
-    border: 2px solid var(--primaryColor);
-    border-radius: 1em;
-}
-
-.game-info {
-    color: var(--primaryColor);
-}
-
-#add-game-form, input[type="button"], #display-games {
-    margin: 0 auto;
-    border-radius: 1em;
+    width: fit-content;
+    padding: 1em 1em;
+    border: 3px solid var(--colorSecondary);
 }
 
 label {
-	float: left;
-    margin-left: 10em;
+    float: left;
+    width: 7em;
     text-align: right;
 }
 
 input[type="text"], select {
+    margin: 0 .5em .5em;
+    background: var(--colorPrimary);
+    color: var(--colorBackground);
+    border: 1px solid var(--colorBackground);
+}
+
+input[type="text"] {
     width: 11em;   
     height: 1.5em;
-    margin: 0 .5em .5em 1em;
-    background: var(--primaryColor);
-    color: var(--backgroundColor);
-    border: 1px solid var(--backgroundColor);
+}
+
+select {
+    width: 11.5em;   
+    height: 1.8em;  
 }
 
 select:hover {
@@ -70,15 +71,32 @@ select:hover {
 input[type="button"] {
     width: 8em;   
     height: 2.5em;
+    margin-top: .5em;
     display: block;
     background: none;
-    transition: all .2s;
-    color: var(--secondaryColor);
-    border: 3px solid var(--secondaryColor);
+    color: var(--colorSecondary);
+    border: 3px solid var(--colorSecondary);
 }
 
 input[type="button"]:hover {
     cursor: pointer;
-    background: var(--secondaryColor);
-    color: var(--backgroundColor);
+    transition: all .5s;
+    background: var(--colorSecondary);
+    color: var(--colorBackground);
+}
+
+#display-games {
+    width: 52%;
+    padding: 1em .5em;
+}
+
+.game-container {
+    float: left;  
+    padding: .5em;
+    margin: .5em;
+    border: 2px solid var(--colorSecondary);
+}
+
+.game-info {
+    color: var(--colorPrimary);
 }

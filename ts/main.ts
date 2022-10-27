@@ -58,7 +58,7 @@ function allDataValid():boolean {
 
     // validate rating
     if(isInputEmpty("rating")) {
-        displayError("Your rating for the game is required!");
+        displayError("Your Rating is required!");
         allDataValid = false;
     }
 
