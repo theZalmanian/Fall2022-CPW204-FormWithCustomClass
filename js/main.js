@@ -51,10 +51,20 @@ function displayVideoGame(currentGame, validSubmissions) {
     createElement("h2", "class", "game-info", gameHeading, gameContainer);
     var gamePrice = "Price: $" + currentGame.price.toFixed(2).toString();
     createElement("p", "class", "game-info", gamePrice, gameContainer);
-    var gameRating = "Rating: " + currentGame.rating.toString();
-    createElement("p", "class", "game-info", gameRating, gameContainer);
+    var userRating = currentGame.rating;
+    createElement("div", "id", "game-rating" + validSubmissions, "Rating: ", gameContainer);
+    addRatingStars(userRating);
     var gameReleaseDate = "Release Date: " + currentGame.releaseDate;
     createElement("p", "class", "game-info", gameReleaseDate, gameContainer);
+}
+function addRatingStars(numStars) {
+    for (var i = 0; i < numStars; i++) {
+        var ratingStar = document.createElement("img");
+        ratingStar.setAttribute("class", "rating-star");
+        ratingStar.src = "/images/icons/rating-star.svg";
+        var ratingDiv = getByID("game-rating" + validSubmissions);
+        ratingDiv.appendChild(ratingStar);
+    }
 }
 function isInputEmpty(id) {
     var userInput = getInputByID(id).value;

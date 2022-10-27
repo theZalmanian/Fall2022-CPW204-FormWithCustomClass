@@ -17,7 +17,7 @@ body, input[type="text"], input[type="button"] {
     font-family: Arial, Helvetica, sans-serif; 
 }
 
-h1 {
+h1, h2 {
     text-align: center;
 }
 
@@ -27,7 +27,7 @@ h1 {
     border-radius: .5em;
 }
 
-#display-errors {
+#display-errors, #add-game-form, .game-container {
     width: fit-content;
 }
 
@@ -38,7 +38,6 @@ h1 {
 }
 
 #add-game-form {
-    width: fit-content;
     padding: 1em 1em;
     border: 3px solid var(--colorSecondary);
 }
@@ -94,13 +93,18 @@ input[type="button"]:hover {
 
 .game-container {
     float: left;  
-    width: fit-content;
     padding: .5em;
     margin: .5em;
     border: 2px solid var(--colorBackground);
     background: var(--colorSecondary);
     color: var(--colorBackground);
     font-weight: bold;
+}
+
+.rating-star {
+    height: 15px;
+    width: 15px;
+    margin-left: .1em;
 }
 
 /* for smaller devices */

@@ -105,23 +105,55 @@ function displayVideoGame(currentGame:VideoGame, validSubmissions:number):void {
     createElement("div", "id", "game-container" + previousGames, "", displayGamesDiv);
 
     // grab the newly created div
-    let gameContainer = getByID("game-container" + previousGames);
+    let gameContainer:HTMLElement = getByID("game-container" + previousGames);
 
     // give it the game-container class
     gameContainer.setAttribute("class", "game-container");
 
     // add the game's title, price, rating, and release date within game container
-    let gameHeading = currentGame.title;
+    let gameHeading:string = currentGame.title;
     createElement("h2", "class", "game-info", gameHeading, gameContainer);
     
-    let gamePrice = "Price: $" + currentGame.price.toFixed(2).toString();
+    let gamePrice:string = "Price: $" + currentGame.price.toFixed(2).toString();
     createElement("p", "class", "game-info", gamePrice, gameContainer);
     
-    let gameRating = "Rating: " + currentGame.rating.toString()
-    createElement("p", "class", "game-info", gameRating, gameContainer);
+    // get rating
+    let userRating:number = currentGame.rating;
+
+    // create div to hold rating stars
+    createElement("div", "id", "game-rating" + validSubmissions, "Rating: ", gameContainer);
+
+    // populate div with stars equal to rating number
+    addRatingStars(userRating);
     
-    let gameReleaseDate = "Release Date: " + currentGame.releaseDate;
+    let gameReleaseDate:string = "Release Date: " + currentGame.releaseDate;
     createElement("p", "class", "game-info", gameReleaseDate, gameContainer);
+}
+
+/**
+ * Creates a div and populates it with rating stars corresponding
+ * to the users rating of the game
+ * @param numStars The number of stars the user rated the game
+ */
+function addRatingStars(numStars:number):void {
+    // for the number of stars the user rated
+    // the game
+    for (let i = 0; i < numStars; i++) {
+        // create img to hold star
+        let ratingStar:HTMLImageElement = document.createElement("img");
+
+        // give img the rating-star class
+        ratingStar.setAttribute("class", "rating-star");
+        
+        // link to star image
+        ratingStar.src = "/images/icons/rating-star.svg";
+    
+        // grab div created to hold stars
+        let ratingDiv:HTMLElement = getByID("game-rating" + validSubmissions)
+
+        // add star within that div
+        ratingDiv.appendChild(ratingStar);   
+    }
 }
 
 /**
