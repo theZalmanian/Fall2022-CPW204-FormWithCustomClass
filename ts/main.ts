@@ -146,7 +146,7 @@ function addRatingStars(numStars:number):void {
         ratingStar.setAttribute("class", "rating-star");
         
         // link to star image
-        ratingStar.src = "/images/icons/rating-star.svg";
+        ratingStar.src = "images/icons/rating-star.svg";
     
         // grab div created to hold stars
         let ratingDiv:HTMLElement = getByID("game-rating" + validSubmissions)

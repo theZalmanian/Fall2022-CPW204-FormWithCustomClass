@@ -61,7 +61,7 @@ function addRatingStars(numStars) {
     for (var i = 0; i < numStars; i++) {
         var ratingStar = document.createElement("img");
         ratingStar.setAttribute("class", "rating-star");
-        ratingStar.src = "/images/icons/rating-star.svg";
+        ratingStar.src = "images/icons/rating-star.svg";
         var ratingDiv = getByID("game-rating" + validSubmissions);
         ratingDiv.appendChild(ratingStar);
     }
