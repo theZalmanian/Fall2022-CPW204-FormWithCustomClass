@@ -1,9 +1,11 @@
 /* Styling the page w/ CSS */
+
+/* Color */
 :root {
     --colorPrimary:    #e59d29;
     --colorSecondary:  #18a8a1;
-    --colorAccent:     #e54f29;
     --colorBackground: #002b36;
+    --colorError:     #e54f29;
 }
 
 body {
@@ -30,9 +32,9 @@ h1 {
 }
 
 #error-list {
-    padding-left: 1em;
+    padding-left: 1.5em;
     list-style-type: square;
-    color: var(--colorAccent);
+    color: var(--colorError);
 }
 
 #add-game-form {
@@ -86,17 +88,24 @@ input[type="button"]:hover {
 }
 
 #display-games {
-    width: 52%;
-    padding: 1em .5em;
+    width: 43em;
+    padding-top: 1em;
 }
 
 .game-container {
     float: left;  
+    width: fit-content;
     padding: .5em;
     margin: .5em;
-    border: 2px solid var(--colorSecondary);
+    border: 2px solid var(--colorBackground);
+    background: var(--colorSecondary);
+    color: var(--colorBackground);
+    font-weight: bold;
 }
 
-.game-info {
-    color: var(--colorPrimary);
+/* for smaller devices */
+@media only screen and (max-width: 680px) {
+    #display-games {
+        width: 30em;
+    }
 }
