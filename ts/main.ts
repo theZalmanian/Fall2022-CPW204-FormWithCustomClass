@@ -10,29 +10,28 @@ window.onload = function():void {
     setupButton("add-game", addVideoGame);
 }
 
-// the amount of valid games that 
-// have been submitted thus far
-let validInput = 0;
+// keeps track of the number of valid games that 
+// have been submitted
+let validSubmissions:number = 0;
 
 /** 
  * This function is called when the add game button is clicked,
  * and displays the game if all form input is valid
 */
 function addVideoGame():void { 
-    // Clear out previous errors
+    // clear out previous errors, if any
     clearPreviousErrors();
 
-    // Check if all data is valid
-    let allValid = isValid();
-    
-    // Validate input
-    if(allValid) {
-        // Create new instance of game
+    // check if all data is valid
+    if(allDataValid()) {
+        // create new instance of game
         let currentGame:VideoGame = getVideoGame();
-        // Increment valid input by 1
-        validInput += 1;
-        // Display game
-        displayVideoGame(currentGame, validInput);
+        
+        // increment valid input by 1
+        validSubmissions += 1;
+        
+        // display game at bottom of form
+        displayVideoGame(currentGame, validSubmissions);
     }
 }
 
@@ -43,28 +42,28 @@ function addVideoGame():void {
  * the appropriate error message(s)
  * @returns True if all data is valid, False if not
  */
-function isValid():boolean {
+function allDataValid():boolean {
     let allDataValid = true;
     
     // validate game title
     if(isInputEmpty("title")) {
-        displayError("Please enter a title");
+        displayError("Game Title is required!");
         allDataValid = false;
     }
     
     // validate game price
-    if(!isPriceValid("price")) {
+    if(!isValidNumber("price")) {
         allDataValid = false;
     } 
 
     // validate rating
     if(isInputEmpty("rating")) {
-        displayError("Please select your rating");
+        displayError("Your rating for the game is required!");
         allDataValid = false;
     }
 
     // validate release date
-    if(!isDateValid("release-date")) {
+    if(!isValidDate("release-date")) {
         allDataValid = false;
     }
 
@@ -93,19 +92,19 @@ function getVideoGame():VideoGame {
 /**
  * Displays the latest form submission at the bottom of the page
  * @param currentGame The current form submission
- * @param validInput The number of valid inputs entered until now
+ * @param validSubmissions The number of valid games submitted until now
  */
-function displayVideoGame(currentGame:VideoGame, validInput:number):void {
+function displayVideoGame(currentGame:VideoGame, validSubmissions:number):void {
     // grab the div where games are displayed
     let displayGamesDiv:HTMLElement = getByID("display-games");
     
-    // create a div to contain the game info,
+    // create a div to contain the game info
     // when adding attribute value, add previousGames to end
     // in order to differentiate between game containers
-    let previousGames:string = validInput.toString();
+    let previousGames:string = validSubmissions.toString();
     createElement("div", "id", "game-container" + previousGames, "", displayGamesDiv);
 
-    // grab gameContainer div
+    // grab the newly created div
     let gameContainer = getByID("game-container" + previousGames);
 
     // give it the game-container class
@@ -126,55 +125,53 @@ function displayVideoGame(currentGame:VideoGame, validInput:number):void {
 }
 
 /**
- * Checks if input is an empty string
+ * Checks if input is empty, or made up of whitespace
  * @param id The input's id.
  * @returns True if input is empty, False if not
  */
 function isInputEmpty(id:string):boolean {
     // get value from textbox
-    let inputValue:string = getInputByID(id).value;
+    let userInput:string = getInputByID(id).value;
     
-    // check if empty string
-    if(inputValue == "") {
+    // check if user input is empty
+    if(userInput == "" || userInput.trim() == "") {
         return true;
     }
-    else {
-        return false;
-    }
+    
+    // if textbox contains text
+    return false;
 }
 
 /**
- * Checks if price is a valid number. If price is not valid, displays
+ * Checks if price is a valid number. If input is not valid, displays
  * the appropriate error message(s)
  * @param id The input's id.
  * @returns True if price is a number, False if not
  */
- function isPriceValid(id:string):boolean {
-    // get value from textbox
-    let inputValue:string = getInputByID(id).value;
+ function isValidNumber(id:string):boolean {
+    // get value from textbox, and convert to float
+    let userInput:number = parseFloat(getInputByID(id).value);
 
     // check if empty string
     if(isInputEmpty(id)) {
-        displayError("Please enter a price");
+        displayError("Game Price is required!");
         return false;
     } 
     
     // check if not a number
-    if( isNaN(parseFloat(inputValue)) ) {
+    if(isNaN(userInput)) {
         displayError("Please enter price as a number")
         return false;
     }
 
     // check if negative
-    if(parseFloat(inputValue) < 0) {
+    if(userInput < 0) {
         displayError("Please enter price as a positive number")
         return false;
     }
     
     // otherwise valid number
-    else {
-        return true;
-    }
+    return true;
 }
 
 /**
@@ -183,13 +180,13 @@ function isInputEmpty(id:string):boolean {
  * @param id The input's id
  * @returns True if date is valid, False if not.
  */
- function isDateValid(id:string):boolean {
+ function isValidDate(id:string):boolean {
     // get value from textbox
-    let inputValue:string = getInputByID(id).value;
+    let userInput:string = getInputByID(id).value;
 
     // check if empty string
     if(isInputEmpty(id)) {
-        displayError("Please enter a release date");
+        displayError("Release Date is required!");
         return false;
     } 
     
@@ -197,17 +194,28 @@ function isInputEmpty(id:string):boolean {
     // mm/dd/yyyy or m/d/yyyy
     let dateFormat = /^\d{1,2}\/\d{1,2}\/\d{4}$/g;
 
-    // test if user input matches proper formatting
-    let isDate = dateFormat.test(inputValue);
+    // check if user input matches proper formatting
+    let isDate = dateFormat.test(userInput);
 
     // if formatting is incorrect, show corresponding error
-    if (isDate == false) {
+    if(!isDate) {
         displayError("Please enter release date as mm/dd/yyyy");
         return false;
     }
-    else {
-        return true;
-    }
+    
+    // if date is formatted correctly
+    return true;
+}
+
+/**
+ * Displays the given error message above the form
+ */
+ function displayError(errorMessage:string):void {
+    // grab the ul where errors are displayed
+    let displayErrorsList:HTMLElement = getByID("error-list");
+
+    // create the error message
+    createElement("li", "class", "error", errorMessage, displayErrorsList);
 }
 
 /**
@@ -219,27 +227,16 @@ function clearPreviousErrors():void {
 }
 
 /**
- * Displays the given error message
- */
-function displayError(errorMessage:string):void {
-    // grab the ul where errors are displayed
-    let displayErrorsList:HTMLElement = getByID("error-list");
-
-    // create the error message
-    createElement("li", "class", "error", errorMessage, displayErrorsList);
-}
-
-/**
- * Creates an element, gives it an id or class, places the specified text within it, 
- * and places the element within another specified element.
- * @param elementType The type of element being created
+ * Creates an element within another specified element. Gives the element an attribute
+ * (class or id), and places the specified text within it (if any)
+ * @param elementType The type of element being created (ex. h2)
  * @param attributeType The attribute type (class or id)
  * @param attributeValue The name of the class or id
  * @param text The text to be placed within the element
- * @param createWithin The previously existing element within which the new element is being created.
+ * @param createWithin The previously existing element within which the new element is being created
  */
  function createElement(elementType:string, attributeType:string, attributeValue:string,  
-                        text:string, createWithin:HTMLElement):void {
+                            text:string, createWithin:HTMLElement):void {
     // create new element
     let newElement = document.createElement(elementType);
     // set element's attribute

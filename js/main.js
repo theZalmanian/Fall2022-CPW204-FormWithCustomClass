@@ -6,30 +6,29 @@ var VideoGame = (function () {
 window.onload = function () {
     setupButton("add-game", addVideoGame);
 };
-var validInput = 0;
+var validSubmissions = 0;
 function addVideoGame() {
     clearPreviousErrors();
-    var allValid = isValid();
-    if (allValid) {
+    if (allDataValid()) {
         var currentGame = getVideoGame();
-        validInput += 1;
-        displayVideoGame(currentGame, validInput);
+        validSubmissions += 1;
+        displayVideoGame(currentGame, validSubmissions);
     }
 }
-function isValid() {
+function allDataValid() {
     var allDataValid = true;
     if (isInputEmpty("title")) {
-        displayError("Please enter a title");
+        displayError("Game Title is required!");
         allDataValid = false;
     }
-    if (!isPriceValid("price")) {
+    if (!isValidNumber("price")) {
         allDataValid = false;
     }
     if (isInputEmpty("rating")) {
-        displayError("Please select your rating");
+        displayError("Your rating for the game is required!");
         allDataValid = false;
     }
-    if (!isDateValid("release-date")) {
+    if (!isValidDate("release-date")) {
         allDataValid = false;
     }
     return allDataValid;
@@ -42,9 +41,9 @@ function getVideoGame() {
     currentGame.releaseDate = getInputByID("release-date").value;
     return currentGame;
 }
-function displayVideoGame(currentGame, validInput) {
+function displayVideoGame(currentGame, validSubmissions) {
     var displayGamesDiv = getByID("display-games");
-    var previousGames = validInput.toString();
+    var previousGames = validSubmissions.toString();
     createElement("div", "id", "game-container" + previousGames, "", displayGamesDiv);
     var gameContainer = getByID("game-container" + previousGames);
     gameContainer.setAttribute("class", "game-container");
@@ -58,55 +57,49 @@ function displayVideoGame(currentGame, validInput) {
     createElement("p", "class", "game-info", gameReleaseDate, gameContainer);
 }
 function isInputEmpty(id) {
-    var inputValue = getInputByID(id).value;
-    if (inputValue == "") {
+    var userInput = getInputByID(id).value;
+    if (userInput == "" || userInput.trim() == "") {
         return true;
     }
-    else {
-        return false;
-    }
+    return false;
 }
-function isPriceValid(id) {
-    var inputValue = getInputByID(id).value;
+function isValidNumber(id) {
+    var userInput = parseFloat(getInputByID(id).value);
     if (isInputEmpty(id)) {
-        displayError("Please enter a price");
+        displayError("Game Price is required!");
         return false;
     }
-    if (isNaN(parseFloat(inputValue))) {
+    if (isNaN(userInput)) {
         displayError("Please enter price as a number");
         return false;
     }
-    if (parseFloat(inputValue) < 0) {
+    if (userInput < 0) {
         displayError("Please enter price as a positive number");
         return false;
     }
-    else {
-        return true;
-    }
+    return true;
 }
-function isDateValid(id) {
-    var inputValue = getInputByID(id).value;
+function isValidDate(id) {
+    var userInput = getInputByID(id).value;
     if (isInputEmpty(id)) {
-        displayError("Please enter a release date");
+        displayError("Release Date is required!");
         return false;
     }
     var dateFormat = /^\d{1,2}\/\d{1,2}\/\d{4}$/g;
-    var isDate = dateFormat.test(inputValue);
-    if (isDate == false) {
+    var isDate = dateFormat.test(userInput);
+    if (!isDate) {
         displayError("Please enter release date as mm/dd/yyyy");
         return false;
     }
-    else {
-        return true;
-    }
-}
-function clearPreviousErrors() {
-    var errorSummary = getByID("error-list");
-    errorSummary.innerHTML = "";
+    return true;
 }
 function displayError(errorMessage) {
     var displayErrorsList = getByID("error-list");
     createElement("li", "class", "error", errorMessage, displayErrorsList);
+}
+function clearPreviousErrors() {
+    var errorSummary = getByID("error-list");
+    errorSummary.innerHTML = "";
 }
 function createElement(elementType, attributeType, attributeValue, text, createWithin) {
     var newElement = document.createElement(elementType);
