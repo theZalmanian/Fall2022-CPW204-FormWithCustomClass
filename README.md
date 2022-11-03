@@ -2,7 +2,7 @@
 Get practice using more TypeScript, form validation,
 and introduce custom classes.
 
-## Live site
+## Live Site
 https://thezalmanian.github.io/Fall2022-CPW204-FormWithCustomClass/
 
 ## Project criteria
