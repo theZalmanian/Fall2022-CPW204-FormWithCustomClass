@@ -2,10 +2,10 @@
 
 /* Color */
 :root {
-    --colorPrimary:    #e59d29;
-    --colorSecondary:  #128ad4;
+    --colorPrimary: #e59d29;
+    --colorSecondary: #128ad4;
     --colorBackground: #002b36;
-    --colorError:      #e54f29;
+    --colorError: #e54f29;
 }
 
 body {
@@ -14,20 +14,20 @@ body {
 }
 
 body, input[type="text"], input[type="button"] {
-    font-family: 'Noto Sans Warang Citi', Arial, Helvetica, sans-serif; 
+    font-family: 'Noto Sans Warang Citi', Arial, Helvetica, sans-serif;
 }
 
 h1, h2 {
     text-align: center;
 }
 
-#display-errors, #add-game-form, input[type="button"], 
+#display-errors, #add-review-form, input[type="button"],
 #display-games, .game-container {
     margin: auto;
     border-radius: .5em;
 }
 
-#display-errors, #add-game-form, .game-container {
+#display-errors, #add-review-form, .game-container {
     width: fit-content;
 }
 
@@ -37,7 +37,7 @@ h1, h2 {
     color: var(--colorError);
 }
 
-#add-game-form {
+#add-review-form {
     padding: 1em 1em;
     border: 3px solid var(--colorSecondary);
 }
@@ -56,21 +56,21 @@ input[type="text"], select {
 }
 
 input[type="text"] {
-    width: 11em;   
+    width: 11em;
     height: 1.5em;
 }
 
 select {
-    width: 11.5em;   
-    height: 1.8em;  
+    width: 11.5em;
+    height: 1.8em;
 }
 
-select:hover {
-    cursor: pointer;
-}
+    select:hover {
+        cursor: pointer;
+    }
 
 input[type="button"] {
-    width: 8em;   
+    width: 8em;
     height: 2.5em;
     margin-top: .5em;
     display: block;
@@ -79,20 +79,20 @@ input[type="button"] {
     border: 3px solid var(--colorSecondary);
 }
 
-input[type="button"]:hover {
-    cursor: pointer;
-    transition: all .5s;
-    background: var(--colorSecondary);
-    color: var(--colorBackground);
-}
+    input[type="button"]:hover {
+        cursor: pointer;
+        transition: all .5s;
+        background: var(--colorSecondary);
+        color: var(--colorBackground);
+    }
 
 #display-games {
-    width: 43em;
+    width: 45em;
     padding-top: 1em;
 }
 
 .game-container {
-    float: left;  
+    float: left;
     padding: .5em;
     margin: .5em;
     border: 2px solid var(--colorBackground);
