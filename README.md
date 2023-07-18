@@ -1,5 +1,5 @@
 # Video Game Reviews
-Get practice using more TypeScript, form validation,
+Getting practice using more TypeScript, form validation,
 and introduce custom classes.
 
 ## Live Site
